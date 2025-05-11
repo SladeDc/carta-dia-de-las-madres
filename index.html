@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Día de las Madres, Mi Amor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f3e7ff, #e7f0ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .envelope {
+            background: linear-gradient(145deg, #9d78c9 0%, #7c64bd 100%);
+            width: 320px;
+            height: 210px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(-5deg);
+        }
+        
+        .envelope:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .envelope-text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+        
+        .card {
+            position: absolute;
+            width: 320px;
+            height: 450px;
+            background: linear-gradient(135deg, #fff 0%, #f9f2ff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            overflow: hidden;
+            display: none;
+            border: 1px solid rgba(157, 120, 201, 0.3);
+        }
+        
+        .card.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            display: block;
+        }
+        
+        .card-title {
+            background: linear-gradient(45deg, #9d78c9, #7c64bd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .card-message {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .card-final {
+            background: linear-gradient(45deg, #9d78c9, #7c64bd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 30px;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #9d78c9;
+            transform: rotate(45deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #9d78c9;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        .flower {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .flower-top-right {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .flower-bottom-left {
+            bottom: 20px;
+            left: 20px;
+        }
+        
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(45deg, #9d78c9, #b797dd);
+            border-radius: 50% 50% 0 50%;
+        }
+        
+        .petal-1 { transform: rotate(0deg); top: 12px; left: 12px; }
+        .petal-2 { transform: rotate(90deg); top: 12px; left: 12px; }
+        .petal-3 { transform: rotate(180deg); top: 12px; left: 12px; }
+        .petal-4 { transform: rotate(270deg); top: 12px; left: 12px; }
+        .petal-5 { transform: rotate(45deg); top: 12px; left: 12px; }
+        .petal-6 { transform: rotate(135deg); top: 12px; left: 12px; }
+        .petal-7 { transform: rotate(225deg); top: 12px; left: 12px; }
+        .petal-8 { transform: rotate(315deg); top: 12px; left: 12px; }
+        
+        .flower-center {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ffdf00;
+            border-radius: 50%;
+            top: 14px;
+            left: 14px;
+        }
+        
+        .butterfly {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0;
+        }
+        
+        .butterfly-wing {
+            position: absolute;
+            width: 15px;
+            height: 20px;
+            background: linear-gradient(45deg, #b797dd, #9d78c9);
+            border-radius: 50% 50% 50% 0;
+        }
+        
+        .wing-left {
+            transform: rotate(-30deg);
+            left: 3px;
+        }
+        
+        .wing-right {
+            transform: rotate(30deg) scaleX(-1);
+            right: 3px;
+        }
+        
+        .butterfly-body {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: #333;
+            left: 14px;
+            top: 5px;
+        }
+        
+        @keyframes flutter {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(-5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .ribbon {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #9d78c9, #b797dd, #9d78c9);
+            left: 0;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope pulse" id="envelope">
+        <div class="envelope-text">Para la Mamá que Amo ♥</div>
+    </div>
+    
+    <div class="card" id="card">
+        <div class="ribbon"></div>
+        <div class="card-title">Feliz Día de las Madres</div>
+        <div class="card-message">
+            En este día tan especial, quiero celebrar a la increíble madre que eres. La ternura con la que cuidas, la paciencia con la que enseñas y el amor infinito que entregas, me dejan sin palabras.
+            <br><br>
+            Ver cómo te entregas día a día, cómo sonríes incluso en los momentos difíciles y cómo haces que todo parezca sencillo, me llena de admiración.
+            <br><br>
+            Eres un regalo en mi vida, no solo como mi compañera y mi amor, sino como la madre maravillosa que cuida de nuestra familia con tanta devoción.
+            <br><br>
+            Gracias por construir este hogar lleno de amor y por recordarme cada día lo afortunado que soy de tenerte.
+        </div>
+        <div class="card-final">Te amo mucho ♥</div>
+        
+        <div class="flower flower-top-right">
+            <div class="petal petal-1"></div>
+            <div class="petal petal-2"></div>
+            <div class="petal petal-3"></div>
+            <div class="petal petal-4"></div>
+            <div class="petal petal-5"></div>
+            <div class="petal petal-6"></div>
+            <div class="petal petal-7"></div>
+            <div class="petal petal-8"></div>
+            <div class="flower-center"></div>
+        </div>
+        
+        <div class="flower flower-bottom-left">
+            <div class="petal petal-1"></div>
+            <div class="petal petal-2"></div>
+            <div class="petal petal-3"></div>
+            <div class="petal petal-4"></div>
+            <div class="petal petal-5"></div>
+            <div class="petal petal-6"></div>
+            <div class="petal petal-7"></div>
+            <div class="petal petal-8"></div>
+            <div class="flower-center"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const envelope = document.getElementById('envelope');
+            const card = document.getElementById('card');
+            
+            envelope.addEventListener('click', function() {
+                envelope.style.display = 'none';
+                card.classList.add('open');
+                createHearts();
+                createButterflies();
+            });
+            
+            function createHearts() {
+                const heartCount = 30;
+                
+                for (let i = 0; i < heartCount; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.classList.add('heart');
+                        
+                        // Posición aleatoria
+                        const x = Math.random() * window.innerWidth;
+                        const y = Math.random() * window.innerHeight;
+                        
+                        // Tamaño aleatorio
+                        const size = Math.random() * 25 + 10;
+                        
+                        heart.style.left = x + 'px';
+                        heart.style.top = y + 'px';
+                        heart.style.width = size + 'px';
+                        heart.style.height = size + 'px';
+                        
+                        // Estilo aleatorio para cada corazón
+                        const hue = Math.random() > 0.5 ? 270 : 330; // Púrpura o rosa
+                        const lightness = Math.random() * 20 + 60; // Más brillante
+                        heart.style.backgroundColor = `hsl(${hue}, 70%, ${lightness}%)`;
+                        
+                        document.body.appendChild(heart);
+                        
+                        // Animación
+                        const duration = Math.random() * 3 + 2;
+                        const direction = Math.random() > 0.5 ? 1 : -1;
+                        
+                        heart.animate([
+                            { transform: `rotate(45deg) scale(0)`, opacity: 0 },
+                            { transform: `rotate(45deg) scale(1)`, opacity: 0.8, offset: 0.2 },
+                            { transform: `rotate(45deg) scale(1) translate(${direction * 100}px, -300px)`, opacity: 0 }
+                        ], {
+                            duration: duration * 1000,
+                            easing: 'ease-out'
+                        }).onfinish = () => {
+                            heart.remove();
+                        };
+                        
+                        // Después de la primera ronda, seguir creando algunos corazones
+                        if (i === heartCount - 1) {
+                            setInterval(() => {
+                                const newHeart = heart.cloneNode(true);
+                                const newX = Math.random() * window.innerWidth;
+                                const newY = window.innerHeight;
+                                newHeart.style.left = newX + 'px';
+                                newHeart.style.top = newY + 'px';
+                                document.body.appendChild(newHeart);
+                                
+                                newHeart.animate([
+                                    { transform: `rotate(45deg) scale(0)`, opacity: 0 },
+                                    { transform: `rotate(45deg) scale(1)`, opacity: 0.8, offset: 0.2 },
+                                    { transform: `rotate(45deg) scale(1) translate(${direction * 100}px, -500px)`, opacity: 0 }
+                                ], {
+                                    duration: duration * 1000,
+                                    easing: 'ease-out'
+                                }).onfinish = () => {
+                                    newHeart.remove();
+                                };
+                            }, 2000);
+                        }
+                    }, i * 100);
+                }
+            }
+            
+            function createButterflies() {
+                const butterflyCount = 8;
+                
+                for (let i = 0; i < butterflyCount; i++) {
+                    setTimeout(() => {
+                        const butterfly = document.createElement('div');
+                        butterfly.classList.add('butterfly');
+                        
+                        const wingLeft = document.createElement('div');
+                        wingLeft.classList.add('butterfly-wing', 'wing-left');
+                        
+                        const wingRight = document.createElement('div');
+                        wingRight.classList.add('butterfly-wing', 'wing-right');
+                        
+                        const body = document.createElement('div');
+                        body.classList.add('butterfly-body');
+                        
+                        butterfly.appendChild(wingLeft);
+                        butterfly.appendChild(wingRight);
+                        butterfly.appendChild(body);
+                        
+                        // Posición aleatoria
+                        const x = Math.random() * window.innerWidth;
+                        const y = Math.random() * window.innerHeight;
+                        
+                        butterfly.style.left = x + 'px';
+                        butterfly.style.top = y + 'px';
+                        butterfly.style.opacity = '0';
+                        
+                        document.body.appendChild(butterfly);
+                        
+                        // Tamaño aleatorio
+                        const scale = Math.random() * 0.5 + 0.8;
+                        butterfly.style.transform = `scale(${scale})`;
+                        
+                        // Color aleatorio
+                        const hue = Math.random() > 0.5 ? 270 : 330; // Púrpura o rosa
+                        wingLeft.style.background = `linear-gradient(45deg, hsl(${hue}, 70%, 65%), hsl(${hue}, 70%, 75%))`;
+                        wingRight.style.background = `linear-gradient(45deg, hsl(${hue}, 70%, 65%), hsl(${hue}, 70%, 75%))`;
+                        
+                        // Animación de vuelo
+                        const animDuration = Math.random() * 3 + 8;
+                        const flutterSpeed = Math.random() * 0.5 + 0.5;
+                        
+                        butterfly.animate([
+                            { opacity: 0, transform: `scale(${scale}) translateY(100px)` },
+                            { opacity: 1, transform: `scale(${scale}) translateY(0px)`, offset: 0.1 },
+                            { opacity: 1, transform: `scale(${scale}) translateY(-${Math.random() * 300 + 200}px) translateX(${(Math.random() - 0.5) * 300}px)` },
+                            { opacity: 0, transform: `scale(${scale}) translateY(-${Math.random() * 400 + 300}px) translateX(${(Math.random() - 0.5) * 400}px)` }
+                        ], {
+                            duration: animDuration * 1000,
+                            easing: 'ease-in-out'
+                        }).onfinish = () => {
+                            butterfly.remove();
+                        };
+                        
+                        // Animación de aleteo
+                        wingLeft.animate([
+                            { transform: 'rotate(-30deg)' },
+                            { transform: 'rotate(-60deg)' },
+                            { transform: 'rotate(-30deg)' }
+                        ], {
+                            duration: flutterSpeed * 1000,
+                            iterations: Math.ceil(animDuration / flutterSpeed)
+                        });
+                        
+                        wingRight.animate([
+                            { transform: 'rotate(30deg) scaleX(-1)' },
+                            { transform: 'rotate(60deg) scaleX(-1)' },
+                            { transform: 'rotate(30deg) scaleX(-1)' }
+                        ], {
+                            duration: flutterSpeed * 1000,
+                            iterations: Math.ceil(animDuration / flutterSpeed)
+                        });
+                    }, i * 500);
+                }
+                
+                // Crear mariposas continuamente
+                setInterval(createButterfly, 3000);
+            }
+            
+            function createButterfly() {
+                const butterfly = document.createElement('div');
+                butterfly.classList.add('butterfly');
+                
+                const wingLeft = document.createElement('div');
+                wingLeft.classList.add('butterfly-wing', 'wing-left');
+                
+                const wingRight = document.createElement('div');
+                wingRight.classList.add('butterfly-wing', 'wing-right');
+                
+                const body = document.createElement('div');
+                body.classList.add('butterfly-body');
+                
+                butterfly.appendChild(wingLeft);
+                butterfly.appendChild(wingRight);
+                butterfly.appendChild(body);
+                
+                // Posición en la parte inferior
+                const x = Math.random() * window.innerWidth;
+                const y = window.innerHeight;
+                
+                butterfly.style.left = x + 'px';
+                butterfly.style.top = y + 'px';
+                butterfly.style.opacity = '0';
+                
+                document.body.appendChild(butterfly);
+                
+                // Tamaño aleatorio
+                const scale = Math.random() * 0.5 + 0.8;
+                butterfly.style.transform = `scale(${scale})`;
+                
+                // Color aleatorio
+                const hue = Math.random() > 0.5 ? 270 : 330; // Púrpura o rosa
+                wingLeft.style.background = `linear-gradient(45deg, hsl(${hue}, 70%, 65%), hsl(${hue}, 70%, 75%))`;
+                wingRight.style.background = `linear-gradient(45deg, hsl(${hue}, 70%, 65%), hsl(${hue}, 70%, 75%))`;
+                
+                // Animación de vuelo
+                const animDuration = Math.random() * 3 + 8;
+                const flutterSpeed = Math.random() * 0.5 + 0.5;
+                
+                butterfly.animate([
+                    { opacity: 0, transform: `scale(${scale}) translateY(0)` },
+                    { opacity: 1, transform: `scale(${scale}) translateY(-100px)`, offset: 0.1 },
+                    { opacity: 1, transform: `scale(${scale}) translateY(-${Math.random() * 300 + 200}px) translateX(${(Math.random() - 0.5) * 300}px)` },
+                    { opacity: 0, transform: `scale(${scale}) translateY(-${Math.random() * 400 + 300}px) translateX(${(Math.random() - 0.5) * 400}px)` }
+                ], {
+                    duration: animDuration * 1000,
+                    easing: 'ease-in-out'
+                }).onfinish = () => {
+                    butterfly.remove();
+                };
+                
+                // Animación de aleteo
+                wingLeft.animate([
+                    { transform: 'rotate(-30deg)' },
+                    { transform: 'rotate(-60deg)' },
+                    { transform: 'rotate(-30deg)' }
+                ], {
+                    duration: flutterSpeed * 1000,
+                    iterations: Math.ceil(animDuration / flutterSpeed)
+                });
+                
+                wingRight.animate([
+                    { transform: 'rotate(30deg) scaleX(-1)' },
+                    { transform: 'rotate(60deg) scaleX(-1)' },
+                    { transform: 'rotate(30deg) scaleX(-1)' }
+                ], {
+                    duration: flutterSpeed * 1000,
+                    iterations: Math.ceil(animDuration / flutterSpeed)
+                });
+            }
+        });
+    </script>
+</body>
+</html>
